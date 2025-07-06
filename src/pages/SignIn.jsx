@@ -33,9 +33,9 @@ export default function SignIn() {
   }
 
   return (
-    <div className="logged-in">
+    <div className="min-h-screen p-2">
       <h1>Welcome, {username}!</h1>
-      <button onClick={handleSignOut}>Sign Out</button>
+      <button className="btn btn-secondary" onClick={handleSignOut}>Sign Out</button>
     </div>
   );
 }
