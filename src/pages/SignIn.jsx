@@ -1,65 +1,41 @@
-import { useState, useEffect } from 'react'
-import { Auth } from '@supabase/auth-ui-react'
-import { ThemeSupa } from '@supabase/auth-ui-shared'
-import { supabase } from '../db/supabase'
+// App.jsx
+import { Auth } from "@supabase/auth-ui-react";
+import { ThemeSupa } from "@supabase/auth-ui-shared";
+import { supabase } from "../db/supabase";
+import { useAuth } from "../context/AuthProvider";
 
-export default function App() {
-  const [session, setSession] = useState(null)
-  const user = session?.user
-  const uid = user?.id
-  const email = user?.email
-  const username = user?.user_metadata?.full_name || user?.user_metadata?.name || email
+export default function SignIn() {
+  const { session, isLoading } = useAuth();
 
-  console.log("User UID:", uid) // ✅ test log
-
-  useEffect(()=>{
-    const addTodo = async () =>{
-    const {data,error} = await supabase
-      .from('tasks')
-      .insert({name: username, user_id: uid})
-
-      if(error){
-        console.log(error)
-      }
-
-      return data
-  }
-
-  addTodo()
-
-  },[uid,username])
-
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session)
-    })
-
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session)
-    })
-
-    return () => subscription.unsubscribe()
-  }, [])
+  const user = session?.user;
+  const email = user?.email;
+  const username =
+    user?.user_metadata?.full_name ||
+    user?.user_metadata?.name ||
+    email;
 
   const handleSignOut = async () => {
-    await supabase.auth.signOut()
-  }
+    await supabase.auth.signOut();
+  };
+
+  if (isLoading) return <p>Loading session...</p>;
 
   if (!session) {
-    return <Auth supabaseClient={supabase} appearance={{ theme: ThemeSupa }} />
+    return (
+      <div className="flex flex-col items-center justify-center">
+        <Auth
+          supabaseClient={supabase}
+          appearance={{ theme: ThemeSupa }}
+          
+        />
+      </div>
+    );
   }
 
-  
-
-  
-  
   return (
     <div className="logged-in">
       <h1>Welcome, {username}!</h1>
       <button onClick={handleSignOut}>Sign Out</button>
-      
     </div>
-  )
+  );
 }

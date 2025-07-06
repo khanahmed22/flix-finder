@@ -3,15 +3,18 @@ import { Footer } from "./components/Footer";
 import { Route, Routes } from "react-router";
 import Home from "./pages/Home";
 import WatchList from "./pages/WatchList";
-import { BioProvider } from "./BioContext";
+import { BioProvider } from "./practiceFiles/BioContext";
 import { Toaster } from "sonner";
 import MovieSearch from "./pages/MovieSearch";
 import MovieView from "./pages/MovieView";
 import SignIn from "./pages/SignIn";
+import { useAuth } from "./context/AuthProvider";
 
 
 
 function App() {
+
+  const {session} = useAuth()
   return (
     <>
       <div>

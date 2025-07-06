@@ -1,34 +1,21 @@
 import { useState } from "react";
 import { supabase } from "../db/supabase";
-import { useEffect } from "react";
 import axios from "axios";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { toast} from "sonner";
 import { useNavigate } from "react-router";
+import { useAuth } from "../context/AuthProvider";
+import { Eye, PlusCircle, Trash2 } from "lucide-react";
 export default function MovieSearch() {
   const [search, setSearch] = useState("");
 
-  const [session, setSession] = useState(null)
+  const {session} = useAuth()
   const user = session?.user
   const user_id = user?.id
-  const email = user?.email
-  const username = user?.user_metadata?.full_name || user?.user_metadata?.name || email
-
   const navigate = useNavigate()
 
- useEffect(() => {
-     supabase.auth.getSession().then(({ data: { session } }) => {
-       setSession(session)
-     })
+  
  
-     const {
-       data: { subscription },
-     } = supabase.auth.onAuthStateChange((_event, session) => {
-       setSession(session)
-     })
- 
-     return () => subscription.unsubscribe()
-   }, [])
 
 
   const fetchMovie = async () => {
@@ -122,13 +109,15 @@ export default function MovieSearch() {
               <p className="font-bold text-lg">{m.Title}</p>
               <div className="flex gap-x-3">
                 <button 
-                  className="btn btn-primary"
+                  className="btn btn-primary flex items-center"
                   onClick={()=>navigate(`/movie/${m.imdbID}`)}
-                >
+                > 
+                 <Eye size={18}/>
                   View
+                 
                 </button>
                 <button
-                  className="btn btn-primary"
+                  className="btn btn-neutral flex items-center"
                   onClick={() =>
                     mutate({
                       Title: m.Title,
@@ -136,7 +125,8 @@ export default function MovieSearch() {
                       imdbID: m.imdbID,
                     })
                   }
-                >
+                > 
+                  <PlusCircle size={18}/>
                   Add to WatchList
                 </button>
               </div>

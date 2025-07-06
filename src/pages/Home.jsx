@@ -1,12 +1,11 @@
-import { useContext } from "react"
-import { BioContext } from "../BioContext"
+import { useAuth } from "../context/AuthProvider"
 export default function Home(){
 
-  const {myName} = useContext(BioContext)
+  const {session} = useAuth()
   return(
     <>
       <div className="min-h-screen">
-        WELCOME {myName}
+        <p>Welcome {session?.user?.email}</p>;
       </div>
     </>
   )

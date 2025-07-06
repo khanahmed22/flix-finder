@@ -1,29 +1,19 @@
 import { supabase } from "../db/supabase";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useState,useEffect } from "react";
+import { useState} from "react";
 import { toast } from "sonner";
+import { useAuth } from "../context/AuthProvider";
+import { useNavigate } from "react-router";
+import { Eye, Trash2 } from "lucide-react";
 
 export default function WatchList() {
   const queryClient = useQueryClient(); // ✅ Enables cache control
   const [search, setSearch] = useState("");
-  const [session, setSession] = useState(null)
+  const {session} = useAuth()
   const user = session?.user
   const user_id = user?.id
-
-  useEffect(() => {
-      supabase.auth.getSession().then(({ data: { session } }) => {
-        setSession(session)
-      })
+  const navigate = useNavigate()
   
-      const {
-        data: { subscription },
-      } = supabase.auth.onAuthStateChange((_event, session) => {
-        setSession(session)
-      })
-  
-      return () => subscription.unsubscribe()
-    }, [])
-
   const fetchWatchList = async () => {
     const { data, error } = await supabase.from("movie").select();
     if (error) {
@@ -33,9 +23,13 @@ export default function WatchList() {
   };
 
   const { data: watchList, isPending } = useQuery({
-    queryKey: ["watchListKey"],
+    queryKey: ["watchListKey", user_id],
     queryFn: fetchWatchList,
-    staleTime: 1000 * 60 * 5, // ✅ Optional: keeps data fresh for 5 mins
+    enabled: !!user_id,
+    staleTime: 1000 * 60 * 5, // cache stays fresh for 5 minutes
+    refetchOnWindowFocus: false, // ❌ don't refetch on tab focus
+    refetchOnMount: false, // ❌ don't refetch every time component mounts
+    keepPreviousData: true,
   });
 
   const DeleteMovie = async ({ ImDBID }) => {
@@ -93,7 +87,7 @@ export default function WatchList() {
         </label>
       </div>
 
-      <div className="grid grid-cols-3 place-items-center p-3 gap-x-2 gap-y-4">
+      <div className="grid grid-cols-3 max-md:grid-cols-1 max-md:gap-y-3 place-items-center p-3 gap-x-2 gap-y-4">
         {!isPending && filteredList?.length > 0 ? (
           filteredList.map((m, index) => (
             <div
@@ -101,17 +95,35 @@ export default function WatchList() {
               className="card bg-base-100 w-96 shadow-xl flex flex-col items-center gap-y-3 "
             >
               <img
-                src={m.poster}
+                src={
+                  m?.poster === "N/A"
+                    ? "https://placehold.co/400x400"
+                    : m?.poster
+                }
                 alt="movie image"
                 className="w-[200px] object-cover rounded-lg "
               />
               <p className="font-semibold">{m.title}</p>
-              <button
-                onClick={() => mutate({ ImDBID: m.imdbID })}
-                className="btn btn-warning mb-2"
-              >
-                Delete
-              </button>
+
+              <div className="flex gap-x-3 ">
+                <span>
+                <button
+                  className="btn btn-primary "
+                  onClick={() => navigate(`/movie/${m.imdbID}`)}
+                >
+                  <Eye size={18}/> View
+                </button>
+                </span>
+
+                <button
+                  onClick={() => mutate({ ImDBID: m.imdbID })}
+                  className="btn btn-warning mb-2"
+                > 
+                <Trash2 size={18}/>
+                  Delete
+                  
+                </button>
+              </div>
             </div>
           ))
         ) : (
