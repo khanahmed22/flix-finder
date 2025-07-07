@@ -117,7 +117,7 @@ export default function WatchList() {
 
                 <button
                   onClick={() => mutate({ ImDBID: m.imdbID })}
-                  className="btn btn-warning mb-2"
+                  className="btn btn-warning"
                 > 
                 <Trash2 size={18}/>
                   Delete

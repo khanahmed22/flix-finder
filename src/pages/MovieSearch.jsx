@@ -30,6 +30,8 @@ export default function MovieSearch() {
     queryKey: ["movieSearch", search],
     queryFn: fetchMovie,
     enabled: !!search,
+    
+    
   });
 
   const addMovie = async ({ Title, Poster, imdbID }) => {
@@ -119,10 +121,11 @@ export default function MovieSearch() {
                 </button>
                 <button
                   className="btn btn-sm btn-neutral"
-                  onClick={() => mutate(m)}
+                  
+                  onClick={() => session? mutate(m): navigate('/sign-in')}
                 >
                   <PlusCircle className="w-4 h-4" />
-                  Add to WatchList
+                  {session? <span>Add to WatchList</span>: <span>Sign to Sync WatchList</span>}
                 </button>
               </div>
             </div>

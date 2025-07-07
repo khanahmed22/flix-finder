@@ -80,7 +80,27 @@ export default function MovieView() {
             className="w-[300px] rounded shadow-md"
           />
           <h2 className="text-xl font-bold">{singleMovie?.Title}</h2> 
-          
+          <h3 className="text-xl font-bold">Released: {singleMovie?.Year}</h3> 
+          <h3 className="text-xl font-bold">Language: {singleMovie?.Language}</h3> 
+          <h3 className="text-xl font-bold">Age Rating: {singleMovie?.Rated}</h3> 
+          <h3 className="text-xl font-bold">Runtime: {singleMovie?.Runtime}</h3>
+          <h3 className="text-xl font-bold">Genre: {singleMovie?.Genre}</h3>
+          <h3 className="text-xl font-bold">Director: {singleMovie?.Director}</h3>
+          <h3 className="text-xl font-bold">Writer: {singleMovie?.Writer}</h3>
+          <h3 className="text-xl font-bold">Actors: {singleMovie?.Actors}</h3>
+          <h3 className="text-xl font-bold">Plot: {singleMovie?.Plot}</h3>
+          <h3 className="text-xl font-bold">Awards: {singleMovie?.Awards}</h3>
+          <h3 className="text-xl font-bold">IMDB Rating: {singleMovie?.imdbRating}</h3>
+          <h3 className="text-xl font-bold">MetaScore: {singleMovie?.Metascore}</h3>
+          <h3 className="text-xl font-bold">Type: {singleMovie?.Type}</h3>
+          <h3 className="text-xl font-bold">BoxOffice: {singleMovie?.BoxOffice}</h3>
+          <h3 className="text-xl font-bold">
+            Rotten Tomatoes Score:{" "}
+            {
+              singleMovie?.Ratings?.find(rating => rating.Source === "Rotten Tomatoes")?.Value || "N/A"
+            }
+          </h3>
+
           <button
             
             onClick={() =>

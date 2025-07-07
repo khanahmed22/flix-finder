@@ -1,5 +1,5 @@
 import { useAuth } from "../context/AuthProvider";
-import { useNavigate } from "react-router";
+import { useNavigate,NavLink } from "react-router";
 import { supabase } from "../db/supabase";
 
 export const Header = () => {
@@ -37,14 +37,14 @@ export const Header = () => {
               className="menu menu-lg dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
             >
               <li>
-                <a href="/">Home</a>
+                <NavLink to="/">Home</NavLink>
               </li>
               <li>
-                <a href="/movie-search">Movie Search</a>
+                 <NavLink to="/movie-search">Movie Search</NavLink>
               </li>
-              <li>
-                <a href="/watchlist">My WatchList</a>
-              </li>
+              {session ? <li>
+              <NavLink to='/watchlist'>WatchList</NavLink>
+            </li>: <p></p>}
             </ul>
           </div>
           <a className="btn btn-ghost text-xl">daisyUI</a>
@@ -52,14 +52,14 @@ export const Header = () => {
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">
             <li>
-              <a href="/">Home</a>
-            </li>
-            <li>
-              <a href="/movie-search">Movie Search</a>
-            </li>
-            {session ? <li>
-              <a href="/watchlist">My WatchList</a>
-            </li>: <p></p>}
+                <NavLink to="/">Home</NavLink>
+              </li>
+              <li>
+                 <NavLink to="/movie-search">Movie Search</NavLink>
+              </li>
+              {session ? <li>
+              <NavLink to='/watchlist'>WatchList</NavLink>
+            </li>: <span></span>}
           </ul>
         </div>
 
