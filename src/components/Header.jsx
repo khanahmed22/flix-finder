@@ -13,7 +13,7 @@ export const Header = () => {
 
   return (
     <>
-      <div className="navbar bg-base-100">
+      <nav className="navbar bg-base-100 sticky top-0 right-0 left-0 z-10">
         <div className="navbar-start">
           <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -64,7 +64,7 @@ export const Header = () => {
         </div>
 
         {session?<div className=" btn btn-warning" onClick={handleSignOut}>Sign Out</div>: <div  onClick={()=> navigate('/sign-in')} className="btn btn-primary ">Sign In</div>}
-      </div>
+      </nav>
     </>
   );
 };
