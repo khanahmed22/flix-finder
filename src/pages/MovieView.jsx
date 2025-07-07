@@ -79,7 +79,7 @@ export default function MovieView() {
             alt={singleMovie?.Title}
             className="w-[300px] rounded shadow-md"
           />
-          <h2 className="text-xl font-bold">{singleMovie?.Title}</h2>
+          <h2 className="text-xl font-bold">{singleMovie?.Title}</h2> 
           
           <button
             

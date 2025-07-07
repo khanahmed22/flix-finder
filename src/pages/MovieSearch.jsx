@@ -2,21 +2,17 @@ import { useState } from "react";
 import { supabase } from "../db/supabase";
 import axios from "axios";
 import { useQuery, useMutation } from "@tanstack/react-query";
-import { toast} from "sonner";
+import { toast } from "sonner";
 import { useNavigate } from "react-router";
 import { useAuth } from "../context/AuthProvider";
 import { Eye, PlusCircle, Trash2 } from "lucide-react";
 export default function MovieSearch() {
   const [search, setSearch] = useState("");
 
-  const {session} = useAuth()
-  const user = session?.user
-  const user_id = user?.id
-  const navigate = useNavigate()
-
-  
- 
-
+  const { session } = useAuth();
+  const user = session?.user;
+  const user_id = user?.id;
+  const navigate = useNavigate();
 
   const fetchMovie = async () => {
     const API = `http://www.omdbapi.com/?s=${search}&apikey=${
@@ -36,7 +32,7 @@ export default function MovieSearch() {
     enabled: !!search,
   });
 
-  const addMovie = async ({ Title, Poster, imdbID}) => {
+  const addMovie = async ({ Title, Poster, imdbID }) => {
     const { data: supabaseData, error } = await supabase
       .from("movie")
       .insert(
@@ -65,8 +61,6 @@ export default function MovieSearch() {
     onError: () => toast.error("Movie Already Exists"),
   });
 
- 
-
   return (
     <div className="min-h-screen">
       <h2 className="text-center text-lg font-bold mb-4">Movie Search</h2>
@@ -94,48 +88,47 @@ export default function MovieSearch() {
         </label>
       </div>
 
-     
-      <div className="grid grid-cols-3 place-items-center gap-y-4">
-        {!isPending && movieResults?.length > 0 ? (
-          movieResults?.map((m, index) => (
+      <div className="grid grid-cols-3 place-items-center gap-y-9 max-md:grid-cols-1">
+        {!search ? (
+          <p>Start Searching...</p>
+        ) : isPending ? (
+          <p>Searching...</p>
+        ) : movieResults?.length > 0 ? (
+          movieResults.map((m, index) => (
             <div
               key={index}
-              className="card bg-base-100 w-[400px] h-[420px] shadow-xl flex flex-col items-center gap-y-3 p-3 "
+              className="card flex flex-col gap-y-3 items-center justify-center w-[300px] h-[350px] shadow-2xl"
             >
               <img
-                src={m.Poster === 'N/A' ? "https://placehold.co/200x200": m.Poster}
-                className="w-[200px] h-[300px] object-cover rounded-lg "
+                src={
+                  m.Poster !== "N/A"
+                    ? m.Poster
+                    : "https://via.placeholder.com/150"
+                }
+                alt={m.Title}
+                className="w-[200px] h-[250px] object-cover rounded-xl"
               />
-              <p className="font-bold text-lg">{m.Title}</p>
-              <div className="flex gap-x-3">
-                <button 
-                  className="btn btn-primary flex items-center"
-                  onClick={()=>navigate(`/movie/${m.imdbID}`)}
-                > 
-                 <Eye size={18}/>
+              <p className="font-semibold">{m.Title}</p>
+              <div className="flex gap-2 mt-2">
+                <button
+                  className="btn btn-sm btn-info"
+                  onClick={() => navigate(`/movie/${m.imdbID}`)}
+                >
+                  <Eye className="w-4 h-4" />
                   View
-                 
                 </button>
                 <button
-                  className="btn btn-neutral flex items-center"
-                  onClick={() =>
-                    mutate({
-                      Title: m.Title,
-                      Poster: m.Poster,
-                      imdbID: m.imdbID,
-                    })
-                  }
-                > 
-                  <PlusCircle size={18}/>
+                  className="btn btn-sm btn-neutral"
+                  onClick={() => mutate(m)}
+                >
+                  <PlusCircle className="w-4 h-4" />
                   Add to WatchList
                 </button>
               </div>
             </div>
           ))
         ) : (
-          <div className="flex items-center justify-center">
-            <h2>{search === ""? <p>Start Searching</p>:<p>No Results</p>}</h2>
-          </div>
+          <p>No results found</p>
         )}
       </div>
     </div>
