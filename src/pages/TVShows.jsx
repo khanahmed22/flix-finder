@@ -1,12 +1,10 @@
-import { useAuth } from "../context/AuthProvider"
 import axios from "axios"
 import { useQuery } from "@tanstack/react-query"
-import { Play, Plus, Star, Tv } from 'lucide-react'
+import { Play, Star, Tv } from 'lucide-react'
 import { useNavigate } from "react-router"
 
 const API_KEY = import.meta.env.VITE_TMD_API
 
-// Utility to fetch and attach IMDb IDs
 const attachImdbIds = async (shows) => {
   const enriched = await Promise.all(
     shows.map(async (show) => {
@@ -23,7 +21,7 @@ const attachImdbIds = async (shows) => {
 }
 
 export default function TVShows() {
-  const { session } = useAuth()
+
   const navigate = useNavigate()
 
   const fetchPopularTvShows = async () => {

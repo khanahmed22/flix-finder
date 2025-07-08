@@ -1,11 +1,10 @@
-import { useAuth } from "../context/AuthProvider"
 import axios from "axios"
 import { useQuery } from "@tanstack/react-query"
-import { Play, Plus, Star, Film } from "lucide-react"
+import { Play, Star, Film } from "lucide-react"
 import { useNavigate } from "react-router"
 
 export default function Movies() {
-  const { session } = useAuth()
+ 
   const navigate = useNavigate()
   const TMD_API_KEY = import.meta.env.VITE_TMD_API
 

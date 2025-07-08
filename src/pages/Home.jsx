@@ -1,13 +1,10 @@
-"use client"
-
-import { useAuth } from "../context/AuthProvider"
 import axios from "axios"
 import { useQuery } from "@tanstack/react-query"
-import { Search, Play, Plus, Star, TrendingUp, Film, Tv } from "lucide-react"
+import { Play, Star, TrendingUp, Film } from "lucide-react"
 import { useNavigate } from "react-router"
 
 export default function Home() {
-  const { session } = useAuth()
+
   const navigate = useNavigate()
 
   const TMD_API_KEY = import.meta.env.VITE_TMD_API
@@ -26,6 +23,7 @@ export default function Home() {
           }
         } catch (err) {
           console.error(`Failed to fetch details for movie ID ${movie.id}`)
+          console.log(err)
           return {
             ...movie,
             imdb_id: null,

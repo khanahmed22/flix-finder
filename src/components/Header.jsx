@@ -180,7 +180,7 @@ export const Header = () => {
                 className="flex items-center gap-2 bg-yellow-400 hover:bg-yellow-500 text-black px-4 py-2 rounded-lg font-medium transition-colors"
               >
                 <LogIn className="w-4 h-4" />
-                Sign In
+               <span className="max-md:hidden">Sign In</span>
               </button>
             )}
 
