@@ -7,9 +7,12 @@ import { useAuth } from "../context/AuthProvider";
 import { useNavigate } from "react-router";
 import { Star,Plus, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
+import NotFound from "./NotFound";
 
 export default function MovieView() {
   const { imdbID } = useParams();
+  const isValid = /^tt\d{7,8}$/.test(imdbID);
+  
   const [watchStatus, setWatchStatus] = useState(false);
   const { session } = useAuth();
   const user_id = session?.user?.id;
@@ -137,6 +140,10 @@ export default function MovieView() {
     queryFn: fetchStreamOptions,
   });
 
+  if (!isValid) {
+    return <NotFound />;
+  }
+
   return (
     <div className="min-h-screen bg-gray-900 text-white">
       <div className="max-w-7xl mx-auto p-6">
@@ -219,6 +226,22 @@ export default function MovieView() {
                 <p className="text-gray-300 text-lg leading-relaxed max-w-4xl">
                   {singleMovie?.Plot}
                 </p>
+                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                  <div>
+                    <span className="text-gray-400">Director:</span>
+                    <span className="ml-2 text-blue-400 hover:text-blue-300 cursor-pointer">
+                      {singleMovie?.Director}
+                    </span>
+                  </div>
+                  <div>
+                    <span className="text-gray-400">Writers:</span>
+                    <span className="ml-2 text-blue-400 hover:text-blue-300 cursor-pointer">{singleMovie?.Writer}</span>
+                  </div>
+                  <div className="md:col-span-2">
+                    <span className="text-gray-400">Stars:</span>
+                    <span className="ml-2 text-blue-400 hover:text-blue-300 cursor-pointer">{singleMovie?.Actors}</span>
+                  </div>
+                </div>
 
                 {watchStatus ? (
                   <button
@@ -249,6 +272,7 @@ export default function MovieView() {
                     {session ? "Add to Watchlist" : "Sign in to add"}
                   </button>
                 )}
+                
 
                 <div className="pt-4">
                   <div className="mt-4">
@@ -274,9 +298,85 @@ export default function MovieView() {
                     )}
                   </div>
                 </div>
-              </div>
+
+                {/* Ratings Sidebar */}
+            
+              <div className="space-y-6 flex max-md:flex-col  items-center justify-between">
+                {/* All Ratings */}
+                <div className="bg-gray-800 rounded-lg p-6 w-[400px] max-md:w-[280px]">
+                  <h3 className="text-xl font-bold text-yellow-400 mb-4">Ratings</h3>
+                  <div className="space-y-4">
+                    {/* IMDb Rating */}
+                    <div className="flex items-center justify-between p-3 bg-gray-700 rounded">
+                      <div className="flex items-center gap-2">
+                        <div className="w-8 h-8 bg-yellow-400 text-black rounded flex items-center justify-center font-bold text-xs">
+                          IMDb
+                        </div>
+                        <span className="text-white">IMDb Rating</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <Star className="w-4 h-4 text-yellow-400 fill-current" />
+                        <span className="font-bold text-white">{singleMovie?.imdbRating}</span>
+                      </div>
+                    </div>
+
+                    {/* Metacritic */}
+                    {singleMovie?.Metascore && singleMovie?.Metascore !== "N/A" && (
+                      <div className="flex items-center justify-between p-3 bg-gray-700 rounded">
+                        <div className="flex items-center gap-2">
+                          <div className="w-8 h-8 bg-green-600 text-white rounded flex items-center justify-center font-bold text-xs">
+                            M
+                          </div>
+                          <span className="text-white">Metacritic</span>
+                        </div>
+                        <span className="font-bold text-green-400">{singleMovie?.Metascore}</span>
+                      </div>
+                    )}
+
+                    {/* Rotten Tomatoes */}
+                    {singleMovie?.Ratings?.find((rating) => rating.Source === "Rotten Tomatoes") && (
+                      <div className="flex items-center justify-between p-3 bg-gray-700 rounded">
+                        <div className="flex items-center gap-2">
+                          <div className="w-8 h-8 bg-red-600 text-white rounded flex items-center justify-center font-bold text-xs">
+                            RT
+                          </div>
+                          <span className="text-white">Rotten Tomatoes</span>
+                        </div>
+                        <span className="font-bold text-red-400">
+                          {singleMovie?.Ratings?.find((rating) => rating.Source === "Rotten Tomatoes")?.Value}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* Quick Facts */}
+                <div className="bg-gray-800 rounded-lg p-6 w-[400px] max-md:w-[280px]">
+                  <h3 className="text-xl font-bold text-yellow-400 mb-4">Quick Facts</h3>
+                  <div className="space-y-3 text-sm">
+                    <div>
+                      <span className="text-gray-400 block">Release Year</span>
+                      <span className="text-white font-medium">{singleMovie?.Year}</span>
+                    </div>
+                    <div>
+                      <span className="text-gray-400 block">Age Rating</span>
+                      <span className="text-white font-medium">{singleMovie?.Rated}</span>
+                    </div>
+                    <div>
+                      <span className="text-gray-400 block">Duration</span>
+                      <span className="text-white font-medium">{singleMovie?.Runtime}</span>
+                    </div>
+                    <div>
+                      <span className="text-gray-400 block">Language</span>
+                      <span className="text-white font-medium">{singleMovie?.Language}</span>
+                    </div>
+                  </div>
+                </div>
+              
             </div>
           </div>
+        </div>
+      </div> 
         )}
       </div>
     </div>

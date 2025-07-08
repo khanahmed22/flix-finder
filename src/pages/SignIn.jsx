@@ -3,9 +3,11 @@ import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { supabase } from "../db/supabase";
 import { useAuth } from "../context/AuthProvider";
+import { useNavigate } from "react-router";
 
 export default function SignIn() {
   const { session, isLoading } = useAuth();
+  const navigate = useNavigate()
 
   const user = session?.user;
   const email = user?.email;
@@ -32,10 +34,9 @@ export default function SignIn() {
     );
   }
 
-  return (
-    <div className="min-h-screen p-2">
-      <h1>Welcome, {username}!</h1>
-      <button className="btn btn-secondary" onClick={handleSignOut}>Sign Out</button>
-    </div>
-  );
+  else if(session){
+    return  navigate('/profile')
+    
+  }
+
 }
