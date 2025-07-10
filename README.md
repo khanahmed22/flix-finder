@@ -7,4 +7,13 @@ Don't know what to watch and from where? No worries, just hop on to Flix Finder 
 
 ![App Screenshot](https://iili.io/FENQ1RI.png)
 
+## Techstack
+
+- ReactJS
+- Supabase for Backend and User Authentication
+- Daisy UI and Tailwind for Styling.
+- TMDB API for fetching movies
+
+
+
 
