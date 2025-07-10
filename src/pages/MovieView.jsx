@@ -20,7 +20,7 @@ export default function MovieView() {
   const queryClient = useQueryClient();
 
   const fetchSingleMovie = async () => {
-    const API = `http://www.omdbapi.com/?i=${imdbID}&apikey=${
+    const API = `https://www.omdbapi.com/?i=${imdbID}&apikey=${
       import.meta.env.VITE_OMPBAPI_API_KEY
     }`;
     const res = await axios.get(API);
