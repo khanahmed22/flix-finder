@@ -14,6 +14,10 @@ Don't know what to watch and from where? No worries, just hop on to Flix Finder 
 - Daisy UI and Tailwind for Styling.
 - TMDB API for fetching movies
 
+## Check out Demo:
+
+  https://flix-finder23.netlify.app/
+
 
 
 
