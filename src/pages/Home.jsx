@@ -9,7 +9,7 @@ export default function Home() {
 
   const TMD_API_KEY = import.meta.env.VITE_TMD_API
 
-  // ✅ Generic helper to fetch details and add imdb_id
+
   const addImdbIds = async (movies) => {
     return await Promise.all(
       movies.map(async (movie) => {
@@ -54,7 +54,7 @@ export default function Home() {
     return await addImdbIds(res.data.results)
   }
 
-  const { data: trendingData } = useQuery({
+  const { data: trendingData,isLoading   } = useQuery({
     queryKey: ["trending"],
     queryFn: fetchTrending,
   })
@@ -70,6 +70,18 @@ export default function Home() {
   })
 
   const featuredMovie = trendingData?.[0]
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center py-20">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-yellow-400"></div>
+        <span className="ml-4 text-lg text-gray-300">
+          Loading please wait...
+        </span>
+      </div>
+    );
+  }
+  
 
   return (
     <div className="min-h-screen bg-gray-900 text-white">

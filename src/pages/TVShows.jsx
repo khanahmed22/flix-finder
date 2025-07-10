@@ -44,7 +44,7 @@ export default function TVShows() {
     return attachImdbIds(res.data.results)
   }
 
-  const { data: popularTvShows } = useQuery({
+  const { data: popularTvShows,isLoading } = useQuery({
     queryKey: ["popularTvShows"],
     queryFn: fetchPopularTvShows,
   })
@@ -70,6 +70,17 @@ export default function TVShows() {
     if (imdb_id) navigate(`/movie/${imdb_id}`)
   }
 
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center py-20">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-yellow-400"></div>
+        <span className="ml-4 text-lg text-gray-300">
+          Loading please wait...
+        </span>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gray-900 text-white">
       {featuredShow && (
@@ -86,8 +97,8 @@ export default function TVShows() {
           <div className="relative z-10 h-full flex items-center px-6">
             <div className="max-w-7xl mx-auto w-full">
               <div className="max-w-2xl">
-                <h2 className="text-4xl md:text-6xl font-bold mb-4">{featuredShow.name}</h2>
-                <p className="text-lg text-gray-300 mb-6 line-clamp-3">{featuredShow.overview}</p>
+                <h2 className="text-4xl md:text-6xl max-md:text-2xl font-bold mb-4">{featuredShow.name}</h2>
+                <p className="text-lg max-md:text-sm text-gray-300 mb-6 line-clamp-3">{featuredShow.overview}</p>
 
                 <div className="flex items-center gap-4 mb-6">
                   <div className="flex items-center gap-1">
@@ -118,7 +129,7 @@ export default function TVShows() {
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-3 mb-4">
             <Tv className="w-8 h-8 text-yellow-400" />
-            <h1 className="text-4xl font-bold">TV Shows</h1>
+            <h1 className="text-4xl max-md:text-2xl font-bold">TV Shows</h1>
           </div>
         </div>
 
@@ -130,7 +141,7 @@ export default function TVShows() {
         ].map((section, idx) => (
           <section key={idx}>
             <div className="flex items-center gap-3 mb-6">
-              <h3 className="text-2xl font-bold">{section.title}</h3>
+              <h3 className="text-2xl max-md:text-xl font-bold">{section.title}</h3>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
               {section.shows?.slice(0, 12).map((show, index) => (

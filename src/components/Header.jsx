@@ -5,7 +5,7 @@ import { useNavigate, NavLink } from "react-router"
 import { useQuery } from "@tanstack/react-query"
 import { useState, useEffect, useRef } from "react"
 import axios from "axios"
-import { Search, Menu, Film, Tv, TrendingUp, User, LogIn } from "lucide-react"
+import { Search, Menu, Film, Tv, TrendingUp, User, LogIn,MonitorCheck,House} from "lucide-react"
 
 export const Header = () => {
   const { session } = useAuth()
@@ -51,7 +51,7 @@ export const Header = () => {
           <div className="flex items-center gap-8">
             <div className="flex items-center gap-2">
               <Film className="w-8 h-8 text-yellow-400" />
-              <span className="text-2xl max-md:text-lg font-bold text-yellow-400">MovieWatch</span>
+              <span className="text-xl max-md:text-lg font-bold text-yellow-400">Flix Finder</span>
             </div>
 
             <div className="hidden md:flex items-center gap-6">
@@ -62,7 +62,8 @@ export const Header = () => {
                     isActive ? "text-yellow-400 bg-gray-700" : ""
                   }`
                 }
-              >
+              > 
+                <House className="w-4 h-4" />
                 Home
               </NavLink>
               <NavLink
@@ -107,6 +108,7 @@ export const Header = () => {
                     }`
                   }
                 >
+                  <MonitorCheck className="w-4 h-4" />
                   WatchList
                 </NavLink>
               )}
@@ -257,7 +259,8 @@ export const Header = () => {
                   }`
                 }
                 onClick={() => setIsMobileMenuOpen(false)}
-              >
+              > 
+                <House className="w-4 h-4" />
                 Home
               </NavLink>
               <NavLink
@@ -305,7 +308,8 @@ export const Header = () => {
                     }`
                   }
                   onClick={() => setIsMobileMenuOpen(false)}
-                >
+                > 
+                  <MonitorCheck className="w-4 h-4" />
                   WatchList
                 </NavLink>
               )}

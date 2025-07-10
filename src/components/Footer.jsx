@@ -10,7 +10,7 @@ export const Footer = () => {
           <div>
             <div className="flex items-center gap-2 mb-4">
               <Film className="w-6 h-6 text-yellow-400" />
-              <h4 className="font-bold text-yellow-400 text-xl">MovieWatch</h4>
+              <h4 className="font-bold text-yellow-400 text-xl">Flix Finder</h4>
             </div>
             <p className="text-gray-400 text-sm mb-4">
               Your ultimate destination for discovering movies and TV shows. Find trending content, build your
@@ -103,7 +103,7 @@ export const Footer = () => {
         <div className="border-t border-gray-700 mt-8 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="text-gray-400 text-sm">
-              <p>&copy; 2024 MovieWatch. All rights reserved.</p>
+              <p>&copy; 2025 Flix Finder. All rights reserved.</p>
             </div>
             <div className="flex gap-6 text-sm text-gray-400">
               <a href="#" className="hover:text-white transition-colors">

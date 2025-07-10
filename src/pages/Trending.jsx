@@ -42,7 +42,7 @@ export default function Trending() {
     return await addImdbIds(res.data.results)
   }
 
-  const { data: trendingMovies } = useQuery({
+  const { data: trendingMovies,isLoading } = useQuery({
     queryKey: ["trendingMovies"],
     queryFn: fetchTrendingMovies,
   })
@@ -58,6 +58,17 @@ export default function Trending() {
   })
 
   const featuredItem = trendingAll?.[0]
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center py-20">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-yellow-400"></div>
+        <span className="ml-4 text-lg text-gray-300">
+          Loading trending please wait...
+        </span>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-900 text-white">
@@ -75,8 +86,8 @@ export default function Trending() {
           <div className="relative z-10 h-full flex items-center px-6">
             <div className="max-w-7xl mx-auto w-full">
               <div className="max-w-2xl">
-                <h2 className="text-4xl md:text-6xl font-bold mb-4">{featuredItem.title || featuredItem.name}</h2>
-                <p className="text-lg text-gray-300 mb-6 line-clamp-3">{featuredItem.overview}</p>
+                <h2 className="text-4xl max-md:text-2xl md:text-6xl font-bold mb-4">{featuredItem.title || featuredItem.name}</h2>
+                <p className="text-lg max-md:text-sm text-gray-300 mb-6 line-clamp-3">{featuredItem.overview}</p>
 
                 <div className="flex items-center gap-4 mb-6">
                   <div className="flex items-center gap-1">
@@ -111,14 +122,14 @@ export default function Trending() {
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-3 mb-4">
             <TrendingUp className="w-8 h-8 text-yellow-400" />
-            <h1 className="text-4xl font-bold">Trending</h1>
+            <h1 className="text-4xl max-md:text-2xl font-bold">Trending</h1>
           </div>
         </div>
 
         <section>
           <div className="flex items-center gap-3 mb-6">
             <TrendingUp className="w-6 h-6 text-yellow-400" />
-            <h3 className="text-2xl font-bold">Trending Today</h3>
+            <h3 className="text-2xl max-md:text-lg font-bold">Trending Today</h3>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
             {trendingAll?.slice(0, 12).map((item, index) => (

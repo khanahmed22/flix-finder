@@ -196,14 +196,14 @@ export default function MovieView() {
                   ))}
                 </div>
 
-                <div className="flex items-center gap-8">
+                <div className="flex max-md:flex-col max-md:items-start items-center gap-8">
                   <div className="flex items-center gap-3">
                     <div className="bg-yellow-400 text-black px-2 py-1 rounded font-bold text-sm">
                       IMDb RATING
                     </div>
                     <div className="flex items-center gap-2">
                       <Star className="w-6 h-6 text-yellow-400 fill-current" />
-                      <span className="text-2xl font-bold">
+                      <span className="text-2xl max-sm:text-lg font-bold">
                         {singleMovie?.imdbRating}
                       </span>
                       <span className="text-gray-400">/10</span>
@@ -216,14 +216,14 @@ export default function MovieView() {
                         <div className="bg-green-600 text-white px-2 py-1 rounded font-bold text-sm">
                           METASCORE
                         </div>
-                        <span className="text-2xl font-bold text-green-400">
+                        <span className="text-2xl max-sm:text-lg font-bold text-green-400">
                           {singleMovie?.Metascore}
                         </span>
                       </div>
                     )}
                 </div>
 
-                <p className="text-gray-300 text-lg leading-relaxed max-w-4xl">
+                <p className="text-gray-300 text-lg max-md:text-sm leading-relaxed max-w-4xl">
                   {singleMovie?.Plot}
                 </p>
                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">

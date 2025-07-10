@@ -78,7 +78,7 @@ export default function Profile() {
                 </button>
 
                 <button
-                  onClick={() => navigate("/settings")}
+                  onClick={() => navigate("#")}
                   className="flex items-center gap-3 p-4 bg-gray-700 hover:bg-gray-600 rounded-lg transition-colors"
                 >
                   <Settings className="w-6 h-6 text-yellow-400" />
