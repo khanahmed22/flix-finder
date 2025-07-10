@@ -12,6 +12,7 @@ Don't know what to watch and from where? No worries, just hop on to Flix Finder 
 - ReactJS
 - Supabase for Backend and User Authentication
 - Daisy UI and Tailwind for Styling.
+- React/TanStack Query for caching.
 - TMDB API for fetching movies
 
 ## Check out Demo:
