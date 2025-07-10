@@ -144,6 +144,7 @@ export default function Home() {
                     src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
                     alt={movie.title}
                     className="w-full h-auto transition-transform duration-300 group-hover:scale-105"
+                    sizes=""
                   />
                   <div className="absolute top-2 right-2 bg-black/70 text-yellow-400 px-2 py-1 rounded text-sm font-semibold">
                     {movie.vote_average.toFixed(1)}
