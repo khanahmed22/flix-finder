@@ -50,8 +50,8 @@ export const Header = () => {
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center gap-8">
             <div className="flex items-center gap-2">
-              <Film className="w-8 h-8 text-yellow-400" />
-              <span className="text-xl max-md:text-lg font-bold text-yellow-400">Flix Finder</span>
+              <img src={"/logo.svg"} className="w-10 h-10" alt="flix finder logo" />
+              <span className="text-lg max-md:text-sm font-bold text-yellow-400">Flix Finder</span>
             </div>
 
             <div className="hidden md:flex items-center gap-6">
