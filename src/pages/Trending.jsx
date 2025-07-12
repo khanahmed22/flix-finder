@@ -2,7 +2,7 @@
 
 import axios from "axios"
 import { useQuery } from "@tanstack/react-query"
-import { Play, Plus, Star, TrendingUp, Film, Tv } from "lucide-react"
+import { Play, Star, TrendingUp, Film, Tv } from "lucide-react"
 import { useNavigate } from "react-router"
 
 export default function Trending() {

@@ -115,8 +115,8 @@ export default function MovieView() {
 
   const fetchStreamOptions = async () => {
     try {
-      const countryRes = await axios.get("https://ipapi.co/json/");
-      const userCountry = countryRes.data?.country;
+      const countryRes = await axios.get("https://ipwho.is/");
+      const userCountry = countryRes.data?.country_code;
 
       const streamRes = await axios.get(
         `https://api.watchmode.com/v1/title/${imdbID}/sources/?apiKey=${
